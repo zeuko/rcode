@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule-execution-set>
+    <name>JRules</name>
+    <description>Rules set</description>
+
+    <synonymn name="robot" class="edu.agh.iwium.robots.SimpleRuleRobot"/>
+    <synonymn name="scannedRobotEvent" class="robocode.ScannedRobotEvent"/>
+    <synonymn name="hitRobotEvent" class="robocode.HitRobotEvent"/>
+    <synonymn name="hitByBullet" class="robocode.HitByBulletEvent"/>
+    <synonymn name="bulletHitEvent" class="robocode.BulletHitEvent"/>
+
+    <rule name="Rule7" description="instead of do nothing go left and ahead then scan">
+        <if leftTerm="robot.getEvent" op="=" rightTerm="NONE"/>
+        <then method="robot.turnLeft" arg1="10"/>
+    </rule>
+
+
+    <rule name="Rule10" description="">
+        <if leftTerm="robot.getEvent" op="=" rightTerm="ON_SCANNED_ROBOT"/>
+        <then method="robot.turnRight" arg1="scannedRobotEvent.getBearing"/>
+        <then method="robot.fire" arg1="robot.getBulletPower"/>
+        <then method="robot.ahead" arg1="100"/>
+    </rule>
+
+
+
+
+</rule-execution-set>
