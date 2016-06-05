@@ -1,0 +1,6 @@
+2016-06-05 15:50:58
+Results for 100 rounds
+Rank,Robot Name,    Total Score    ,Survival,Surv Bonus,Bullet Dmg,Bullet Bonus,Ram Dmg * 2,Ram Bonus, 1sts , 2nds , 3rds 
+1st,sample.VelociRobot,14910 (55%),2800,560,5647,566,4661,676,56,44,0
+2nd,edu.agh.iwium.robots.LearningRobot*,11983 (45%),2200,440,5648,446,2737,512,44,56,0
+$
