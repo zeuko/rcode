@@ -1,13 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rule-execution-set>
     <name>JRules</name>
-    <description>Rules set</description>
+    <description>Rules for BaseRuleRobot </description>
 
     <synonymn name="robot" class="edu.agh.iwium.robots.BaseRuleRobot" />
     <synonymn name="scannedRobotEvent" class="robocode.ScannedRobotEvent" />
     <synonymn name="hitRobotEvent" class="robocode.HitRobotEvent" />
     <synonymn name="hitByBullet" class="robocode.HitByBulletEvent" />
 	<synonymn name="bulletHitEvent" class="robocode.BulletHitEvent" />
+
+    <rule name="Scan" description="Scanning for enemies" >
+        <if leftTerm="robot.getEvent" op="=" rightTerm="NONE" />
+        <then method="robot.turnLeft" arg1="10" />
+    </rule>
+
+    <rule name="EnemyDetected1" description="" >
+        <if leftTerm="robot.getEvent" op="=" rightTerm="ON_SCANNED_ROBOT" />
+        <if leftTerm="robot.getEnergy" op="&gt;=" rightTerm="scannedRobotEvent.getEnergy" />
+        <if leftTerm="scannedRobotEvent.getDistance" op="&lt;=" rightTerm="50" />
+        <then method="robot.setBulletPower" arg1="3" />
+        <then method="robot.turnRight" arg1="scannedRobotEvent.getBearing" />
+        <then method="robot.fireAndMove" arg1="robot.getBulletPower" />
+        <then method="robot.setBulletPower" arg1="1" />
+        <then method="robot.ahead" arg1="25" />
+    </rule>
+
+    <rule name="EnemyDetected2" description="" >
+        <if leftTerm="robot.getEvent" op="=" rightTerm="ON_SCANNED_ROBOT" />
+        <if leftTerm="robot.getEnergy" op="&gt;=" rightTerm="scannedRobotEvent.getEnergy" />
+        <then method="robot.turnRight" arg1="scannedRobotEvent.getBearing" />
+        <then method="robot.fireNoMove" arg1="robot.getBulletPower" />
+        <then method="robot.ahead" arg1="scannedRobotEvent.getDistance" />
+    </rule>
+
+    <rule name="EnemyDetected3" description="" >
+        <if leftTerm="robot.getEvent" op="=" rightTerm="ON_SCANNED_ROBOT" />
+        <if leftTerm="robot.getEnergy" op="&lt;=" rightTerm="scannedRobotEvent.getEnergy" />
+        <then method="robot.turnRight" arg1="scannedRobotEvent.getBearing" />
+        <then method="robot.fireAndMove" arg1="robot.getBulletPower" />
+    </rule>
+
+    <rule name="BulletMissed" description="" >
+        <if leftTerm="robot.getEvent" op="=" rightTerm="ON_BULLET_MISSED" />
+        <then method="robot.setBulletPower" arg1="1" />
+    </rule>
 
     <rule name="OnBulletHit1" description="When enemy has low energy." >
         <if leftTerm="robot.getEvent" op="=" rightTerm="ON_BULLET_HIT" />
@@ -43,55 +79,16 @@
         <then method="robot.decreasePower" arg1="3" />
     </rule>
 
+    <rule name="WallCollision" description="" >
+        <if leftTerm="robot.getEvent" op="=" rightTerm="ON_HIT_WALL" />
+        <then method="robot.turnRight" arg1="90" />
+		<then method="robot.back" arg1="20" />
+    </rule>
+
     <rule name="ResetEvents" description="" >
         <if leftTerm="robot.getEvent" op="=" rightTerm="NONE" />
         <if leftTerm="robot.getLastEvent" op="=" rightTerm="ON_BULLET_HIT" />
         <then method="robot.setLastEvent" arg1 = "NONE"/>
     </rule>
-
-    <rule name="Scan" description="Scanning for enemies" >
-        <if leftTerm="robot.getEvent" op="=" rightTerm="NONE" />
-        <then method="robot.turnLeft" arg1="10" />
-    </rule>
-
-    <rule name="EnemyDetected1" description="" >
-        <if leftTerm="robot.getEvent" op="=" rightTerm="ON_SCANNED_ROBOT" />
-        <if leftTerm="robot.getEnergy" op="&gt;=" rightTerm="scannedRobotEvent.getEnergy" />
-        <if leftTerm="scannedRobotEvent.getDistance" op="&lt;=" rightTerm="50" />
-        <then method="robot.setBulletPower" arg1="3" />
-        <then method="robot.turnRight" arg1="scannedRobotEvent.getBearing" />
-        <then method="robot.fireAndMove" arg1="robot.getBulletPower" />
-        <then method="robot.setBulletPower" arg1="1" />
-        <then method="robot.ahead" arg1="25" />
-    </rule>
-
-    <rule name="EnemyDetected2" description="" >
-        <if leftTerm="robot.getEvent" op="=" rightTerm="ON_SCANNED_ROBOT" />
-        <if leftTerm="robot.getEnergy" op="&gt;=" rightTerm="scannedRobotEvent.getEnergy" />
-        <then method="robot.turnRight" arg1="scannedRobotEvent.getBearing" />
-        <then method="robot.fireNoMove" arg1="robot.getBulletPower" />
-        <then method="robot.ahead" arg1="scannedRobotEvent.getDistance" />
-    </rule>
-
-
-    <rule name="EnemyDetected3" description="" >
-        <if leftTerm="robot.getEvent" op="=" rightTerm="ON_SCANNED_ROBOT" />
-        <if leftTerm="robot.getEnergy" op="&lt;=" rightTerm="scannedRobotEvent.getEnergy" />
-        <then method="robot.turnRight" arg1="scannedRobotEvent.getBearing" />
-        <then method="robot.fireAndMove" arg1="robot.getBulletPower" />
-    </rule>
-
-    <rule name="WallCollision" description="" >
-        <if leftTerm="robot.getEvent" op="=" rightTerm="ON_HIT_WALL" />
-        <then method="robot.turnRight" arg1="90" />
-		<then method="robot.back" arg1="20" />
-		
-    </rule>
-
-    <rule name="BulletMissed" description="" >
-        <if leftTerm="robot.getEvent" op="=" rightTerm="ON_BULLET_MISSED" />
-        <then method="robot.setBulletPower" arg1="1" />
-    </rule>
-    
     
 </rule-execution-set>

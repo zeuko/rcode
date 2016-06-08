@@ -4,11 +4,7 @@ package edu.agh.iwium.robots;
 import robocode.*;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-
-import edu.agh.iwium.robots.Event;
 
 public class BaseRuleRobot extends AdvancedRobot {
 
